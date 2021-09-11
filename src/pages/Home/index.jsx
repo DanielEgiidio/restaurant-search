@@ -5,14 +5,13 @@ import Slider from "react-slick";
 
 import logo from '../../assets/logo.svg';
 import restaurante from '../../assets/restaurante-fake.png';
-import { Card, RestaurantCard, Modal } from '../../components';
+import { Card, RestaurantCard, Modal, Map } from '../../components';
 
 import { 
   Container, 
   Search, 
   Logo, 
   Wrapper, 
-  Map,
   CarouselTitle,
   Carousel
 } 
@@ -30,6 +29,13 @@ const settings = {
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
   const [modalOpened, setModalOpened] = useState(false);
+  const [query, setQuery] = useState(null);
+
+  function handleKeyPress(e){
+    if(e.key === 'Enter'){
+      setQuery(inputValue);
+    }
+  }
 
   return(
     <Wrapper>
@@ -45,6 +51,7 @@ const Home = () => {
                 >
                 <Input
                     value={inputValue}
+                    onKeyPress={handleKeyPress} 
                     onChange={(e) => setInputValue(e.target.value) } 
                 />
               </TextField>
@@ -59,8 +66,8 @@ const Home = () => {
           </Search>
           < RestaurantCard />
       </Container>
-      <Map/>
-      <Modal open={modalOpened} onClose={()=> setModalOpened(!modalOpened)}/>
+      <Map query={query} />
+     {/*<Modal open={modalOpened} onClose={()=> setModalOpened(!modalOpened)}/>*/}
     </Wrapper>  
   );
 }
